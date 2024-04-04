@@ -5,8 +5,8 @@
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
-  --bkg-color: cornsilk;
-  background-color: var(--bkg-color);
+  /* --bkg-color: cornsilk;
+  background-color: var(--bkg-color); */
 }
 
 * {

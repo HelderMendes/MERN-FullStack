@@ -26,8 +26,8 @@ router.get('/', auth, async (req, res) => {
 router.post(
   '/',
   [
-    check('email', 'Please enter valed email').isEmail(),
-    check('password', 'Password is required').exists()
+    check('password', 'Password is required').exists(),
+    check('email', 'Please enter valed email').isEmail()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -41,15 +41,19 @@ router.post(
       // Check if user existes
       let user = await User.findOne({ email });
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+        return res.status(400).json({
+          errors: [{ msg: `Invalid Credentials – This email doesn't exists` }]
+        });
       }
 
       const isMatch = await bycript.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(400).json({ errors: { msg: 'Invalid Credentials' } });
+        return res.status(400).json({
+          errors: {
+            msg: `Invalid Credentials – This password doesn't exists!`
+          }
+        });
       }
 
       const payload = { user: { id: user.id } };
